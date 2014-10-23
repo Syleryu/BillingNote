@@ -8,5 +8,10 @@
     <string name="share_to_sn_description">share_to_sn</string>
     <string name="go_back">back</string>
     <string name="month_consumer">本月消费：</string>
+    <string name="day_consumer">今日支出</string>
+    <string name="today_consumer">今日</string>
+    <string name="add_consumer">添加</string>
+    <string name="history_consumer">历史</string>
+    <string name="consumer_detail">支出明细</string>
 
 </resources>
