@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,31 +12,26 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
     private final static String TAG = "BillingNote-MainActivity";
 
-    private ImageView mTabline;
-    private int mScreen1_3;
     private ViewPager mViewPager;
-    private TextView mTodayTextView;
-    private ImageButton mAddButton;
-    private TextView mHistoryTextView;
+    private Button mTodayButton;
+    private Button mAddButton;
+    private Button mHistoryButton;
     private LinearLayout mTodayLinearLayout;
     private LinearLayout mAddLinearLayout;
     private LinearLayout mHistoryLinearLayout;
@@ -48,18 +42,26 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_main);
 
-        initTabLine();
         initView();
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
             Resources resources = getResources();
-            Drawable drawable = resources
-                    .getDrawable(R.drawable.actionbar_background);
+            Drawable drawable;
+            int upid = Resources.getSystem().getIdentifier("up", "id",
+                    "android");
+            ImageView img = (ImageView) findViewById(upid);
+            // drawable = resources
+            // .getDrawable(R.drawable.actionbar_home_as_up_indicator_background);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // actionBar.setHomeAsUpIndicator(img);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setTitle("返回");
+            drawable = resources.getDrawable(R.drawable.actionbar_background);
             actionBar.setBackgroundDrawable(drawable);
         }
 
@@ -68,26 +70,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
-    }
-
-    private void initTabLine() {
-        mTabline = (ImageView) findViewById(R.id.id_iv_tabline);
-        Display display = getWindow().getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        mScreen1_3 = outMetrics.widthPixels / 3;
-        LayoutParams lp = mTabline.getLayoutParams();
-        lp.width = mScreen1_3;
-        mTabline.setLayoutParams(lp);
     }
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mTodayTextView = (TextView) findViewById(R.id.tv_today);
-        mAddButton = (ImageButton) findViewById(R.id.button_add);
+        mTodayButton = (Button) findViewById(R.id.button_today);
+        mAddButton = (Button) findViewById(R.id.button_add);
+        mHistoryButton = (Button) findViewById(R.id.button_history);
+        mTodayButton.setOnClickListener(this);
         mAddButton.setOnClickListener(this);
-        mHistoryTextView = (TextView) findViewById(R.id.tv_history);
+        mHistoryButton.setOnClickListener(this);
         mTodayLinearLayout = (LinearLayout) findViewById(R.id.tab_today);
         mAddLinearLayout = (LinearLayout) findViewById(R.id.tab_add);
         mHistoryLinearLayout = (LinearLayout) findViewById(R.id.tab_history);
@@ -118,15 +110,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                resetTextView();
                 switch (position) {
                 case 0:
-                    mTodayTextView.setTextColor(Color.parseColor("#008000"));
+                    Log.d(TAG, "onPageSelected" + position);
                     break;
                 case 1:
+                    Log.d(TAG, "onPageSelected" + position);
                     break;
                 case 2:
-                    mHistoryTextView.setTextColor(Color.parseColor("#008000"));
+                    Log.d(TAG, "onPageSelected" + position);
                     break;
 
                 }
@@ -137,6 +129,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
+                Log.d(TAG, "onPageScrollStateChanged" + arg0);
 
             }
 
@@ -144,31 +137,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             public void onPageScrolled(int position, float positionOffset,
                     int positionOffsetPx) {
 
-                LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) mTabline
-                        .getLayoutParams();
-
-                if (mCurrentPageIndex == 0 && position == 0) {
-                    lp.leftMargin = (int) (positionOffset * mScreen1_3 + mCurrentPageIndex
-                            * mScreen1_3);
-                } else if (mCurrentPageIndex == 1 && position == 0) {
-                    lp.leftMargin = (int) (mCurrentPageIndex * mScreen1_3 + (positionOffset - 1)
-                            * mScreen1_3);
-                } else if (mCurrentPageIndex == 1 && position == 1) {
-                    lp.leftMargin = (int) (mCurrentPageIndex * mScreen1_3 + positionOffset
-                            * mScreen1_3);
-                } else if (mCurrentPageIndex == 2 && position == 1) {
-                    lp.leftMargin = (int) (mCurrentPageIndex * mScreen1_3 + (positionOffset - 1)
-                            * mScreen1_3);
-                }
-                mTabline.setLayoutParams(lp);
-
             }
         });
-    }
-
-    protected void resetTextView() {
-        mTodayTextView.setTextColor(Color.BLACK);
-        mHistoryTextView.setTextColor(Color.BLACK);
     }
 
     @Override
@@ -195,7 +165,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     public void createMenu(Menu menu) {
         MenuItem menuItem = menu.add(0, 0, 0, "item1");
-        menuItem.setIcon(R.drawable.ic_launcher);
+        menuItem.setIcon(R.drawable.ic_settings);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
@@ -203,8 +173,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     public void onClick(View v) {
         Log.d(TAG, "view:" + v.getId());
         switch (v.getId()) {
+        case R.id.button_today:
+            mViewPager.setCurrentItem(0);
+            break;
         case R.id.button_add:
-            Toast.makeText(this, "Add menu clicked", Toast.LENGTH_SHORT).show();
+            mViewPager.setCurrentItem(1);
+            break;
+        case R.id.button_history:
+            mViewPager.setCurrentItem(2);
             break;
 
         default:

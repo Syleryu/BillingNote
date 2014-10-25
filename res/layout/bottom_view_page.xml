@@ -1,68 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="#eee"
-    android:orientation="vertical" >
-
-    <ImageView
-        android:id="@+id/id_iv_tabline"
-        android:layout_width="100dp"
-        android:layout_height="3dp"
-        android:background="@drawable/tabline" />
+    android:layout_height="60dp"
+    android:background="#263d54"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="47dp"
+        android:id="@+id/tab_today"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/tab_today"
-            android:layout_width="3dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal" >
+        <Button
+            android:id="@+id/button_today"
+            style="@style/TabButtonStyle"
+            android:drawableTop="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/actionbar_background"
+            android:contentDescription="TODO"
+            android:src="@drawable/back"
+            android:text="@string/tab_today"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_today"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_today"
-                android:textColor="#008000" />
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tab_add"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
 
-        <LinearLayout
-            android:id="@+id/tab_add"
-            android:layout_width="3dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center" >
+        <Button
+            android:id="@+id/button_add"
+            style="@style/TabButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/back"
+            android:background="@drawable/actionbar_background"
+            android:contentDescription="TODO"
+            android:src="@drawable/back"
+            android:text="@string/tab_add"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/button_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_add"
-                android:background="@drawable/actionbar_background"
-                android:src="@drawable/ic_launcher"
-                android:textColor="#000000" />
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tab_history"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
 
-        <LinearLayout
-            android:id="@+id/tab_history"
-            android:layout_width="3dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center" >
-
-            <TextView
-                android:id="@+id/tv_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_history"
-                android:textColor="#000000" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/button_history"
+            style="@style/TabButtonStyle"
+            android:drawableTop="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/actionbar_background"
+            android:contentDescription="TODO"
+            android:src="@drawable/back"
+            android:text="@string/tab_history"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </LinearLayout>
