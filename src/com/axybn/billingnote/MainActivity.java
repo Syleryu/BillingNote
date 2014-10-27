@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             drawable = resources.getDrawable(R.drawable.actionbar_background);
             actionBar.setBackgroundDrawable(drawable);
         }
-
+// yuxy1 permission test
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
