@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             int upid = Resources.getSystem().getIdentifier("up", "id",
                     "android");
             ImageView img = (ImageView) findViewById(upid);
-            // drawable = resources
+            // drawable = resources yuxy1 test
             // .getDrawable(R.drawable.actionbar_home_as_up_indicator_background);
             actionBar.setDisplayHomeAsUpEnabled(true);
             // actionBar.setHomeAsUpIndicator(img);
